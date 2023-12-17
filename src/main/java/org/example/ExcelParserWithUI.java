@@ -25,6 +25,7 @@ public class ExcelParserWithUI extends JFrame {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    //Создание GUI
     public ExcelParserWithUI() {
         super("Анализатор Excel");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -150,7 +151,7 @@ public class ExcelParserWithUI extends JFrame {
         else return "Не допущены";
     }
 
-    // Добавление студента в указанную категорию в соответствующую карту
+    // Добавление студента в указанную категорию
     @SafeVarargs
     private void addToCategoryMap(String category, String studentName, Map<String, List<String>>... studentsMaps) {
         for (Map<String, List<String>> studentsMap : studentsMaps) {
@@ -201,14 +202,18 @@ public class ExcelParserWithUI extends JFrame {
 
     // Создание круговой диаграммы на основе статистики
     private JFreeChart createPieChart(int notAllowedCount, int satisfactoryCount, int goodCount, int excellentCount) {
+        // Создание набора данных для круговой диаграммы
         DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
         dataset.setValue("Троечники", satisfactoryCount);
         dataset.setValue("Хорошисты", goodCount);
         dataset.setValue("Отличники", excellentCount);
         dataset.setValue("Не допущенные", notAllowedCount);
 
+        // Создание круговой диаграммы с использованием JFreeChart
         JFreeChart chart = ChartFactory.createPieChart("Распределение оценок", dataset, true, true, false);
+        // Получение объекта Plot (графического объекта) из диаграммы
         PiePlot plot = (PiePlot) chart.getPlot();
+        // Установка простых (текстовых) меток на диаграмме
         plot.setSimpleLabels(true);
 
         return chart;
@@ -216,12 +221,18 @@ public class ExcelParserWithUI extends JFrame {
 
     // Отображение диаграммы в окне
     private void displayChart(JFreeChart chart) {
+        // Создание нового окна JFrame для отображения диаграммы
         JFrame chartFrame = new JFrame("Круговая диаграмма");
+        // Установка менеджера компоновки BorderLayout для окна
         chartFrame.setLayout(new BorderLayout());
+        // Создание панели с диаграммой
         ChartPanel chartPanel = new ChartPanel(chart);
+        // Добавление панели на центральное место окна
         chartFrame.add(chartPanel, BorderLayout.CENTER);
         chartFrame.setSize(500, 500);
+        // Установка положения окна по центру экрана
         chartFrame.setLocationRelativeTo(null);
+        // Установка видимости окна (отображение окна)
         chartFrame.setVisible(true);
     }
 
